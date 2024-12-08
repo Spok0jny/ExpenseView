@@ -11,7 +11,7 @@ namespace ExpenseView
             InitializeComponent();
             BindingContext = this;// R ustawienie bindingcontext pozwala collectionview wiazac sie z wlasciwosciami, laczy xaml z cs, oznacza to ze wszystkie wlasciowsci jak wydatki beda 'widoczne' w xamlu do bindingu
         }
-
+       
         public class Wydatek
         {
             public required string Nazwa { get; set; }
@@ -25,8 +25,27 @@ namespace ExpenseView
         //R obserrvablecollection sprawia ze jak zmieni sie kolekcja to zmieni sie tez w xamlu
         private void dodajWydatekBtn_Clicked(object sender, EventArgs e)
         {
-            //R dodanie nowego wydatku, trzeba jeszcze dodac formularz bo nie ma xdd
-            Wydatki.Add(new Wydatek { Nazwa = "Test", Kwota = 10.00  });
+
+            var kwotaText = kwotaWydatkuEntry.Text;
+            var nazwa = nazwaWydatkuEntry.Text; 
+
+            double kwota = 0.0; 
+
+            
+            if (double.TryParse(kwotaText, out kwota))
+            {
+               
+                Wydatki.Add(new Wydatek { Nazwa = nazwa, Kwota = kwota });
+            }
+            else
+            {
+              
+                DisplayAlert("Błąd", "Wprowadź prawidłową kwotę", "OK");
+            }
+
+            nazwaWydatkuEntry.Text = string.Empty;
+            kwotaWydatkuEntry.Text = string.Empty;
+
         }
     }
 

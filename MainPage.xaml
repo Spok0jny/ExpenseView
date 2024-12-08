@@ -27,7 +27,18 @@
                 ></Label>
             <!-- R Zielony jak sie miesci w budzecie, czerwony i '-' na poczatku jak sie nie miesci -->
 
+           
+            <Entry x:Name="nazwaWydatkuEntry"
+                   Placeholder="Nazwa wydatku"
+                   FontSize="20"
+                   HorizontalOptions="FillAndExpand" />
 
+ 
+            <Entry x:Name="kwotaWydatkuEntry"
+                   Placeholder="Kwota wydatku"
+                   Keyboard="Numeric"
+                   FontSize="20"
+                   HorizontalOptions="FillAndExpand" />
 
             <Button
                 x:Name="dodajWydatekBtn"
