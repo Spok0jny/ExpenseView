@@ -7,7 +7,7 @@
         <VerticalStackLayout
             Padding="5,0"
             Spacing="30">
-
+            
             <Label
                 Text="Twój pozostały budżet na ten miesiąc:"
                 Style="{StaticResource Headline}" 
@@ -18,13 +18,26 @@
                 
                 ></Label>
 
-            <Label
+           
+                <Label
+                x:Name="budzetLabel"
                 Text="1000zl"
                 Style="{StaticResource SubHeadline}"
                 SemanticProperties.HeadingLevel="Level2"
                 FontSize="40"
                 TextColor="Green" 
                 ></Label>
+                <Button
+            x:Name="zmienBudzet"
+            Clicked="zmienBudzet_Clicked"
+            Text="Zmień budżet" 
+            CharacterSpacing="2"
+            HorizontalOptions="Center"
+            BackgroundColor="DarkOrange"
+            TextTransform="Uppercase"
+            FontAttributes="Bold"
+        ></Button>
+           
             <!-- R Zielony jak sie miesci w budzecie, czerwony i '-' na poczatku jak sie nie miesci -->
 
            
