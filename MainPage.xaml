@@ -25,7 +25,7 @@
                 Style="{StaticResource SubHeadline}"
                 SemanticProperties.HeadingLevel="Level2"
                 FontSize="40"
-                TextColor="Green" 
+                TextColor="#0F0" 
                 ></Label>
                 <Button
             x:Name="zmienBudzet"
@@ -53,6 +53,19 @@
                    FontSize="20"
                    HorizontalOptions="FillAndExpand" />
 
+			<Picker x:Name="kategoriaPicker" Title="Wybierz kategorię">
+				<Picker.ItemsSource>
+					<x:Array Type="{x:Type x:String}">
+						<x:String>Jedzenie</x:String>
+						<x:String>Transport</x:String>
+						<x:String>Oplaty</x:String>
+						<x:String>Rozrywka</x:String>
+						
+					</x:Array>
+				</Picker.ItemsSource>
+
+			</Picker>
+
             <Button
                 x:Name="dodajWydatekBtn"
                 Clicked="dodajWydatekBtn_Clicked"
@@ -66,6 +79,7 @@
             
             <Button
                x:Name="pokazWykresyBtn"
+			   Clicked="pokazWykresyBtn_Clicked"
                Text="Wykresy" 
                CharacterSpacing="2"
                HorizontalOptions="Center"
@@ -86,15 +100,32 @@
                 <!-- R dzieki bindingowi dane beda dynamicznie ladowane do collectionview jak uzytkownik sobie doda jakis wydatek -->
                 <CollectionView.ItemTemplate>
                     <DataTemplate>
-                        <StackLayout Orientation="Horizontal" HorizontalOptions="Center" Spacing="10">
-                            <Label Text="{Binding Nazwa}" FontSize="17" TextColor="Black" />
-                            <Label Text="{Binding KwotaZl}" FontSize="17" TextColor="Black" />
-                            <!-- R itemtemplate to szablon w jaki sposob beda wyswietlane dane w kolekcji, bindujemy tekst do wlasciwosci Nazwa Wydatku, tak samo z kwota -->
 
-                            <!-- R StringFormat 0:C (Currrency) => formatuje kwote wyswietlajac symbol waluty np zl dla lokalizacji polskiej, uzywa culture settings aplikacji/urzadzenia aby okreslic symbol -->
+						<Grid Padding="10" Margin="5" BackgroundColor="LightGray" >
+							<Grid.ColumnDefinitions>
+								<ColumnDefinition Width="*" />
+								
+								<ColumnDefinition Width="*" />
+								
+								<ColumnDefinition Width="*" />
+								
+							</Grid.ColumnDefinitions>
+                           
 
-                        </StackLayout>
-                    </DataTemplate>
+							<Label Text="{Binding Nazwa}" FontSize="17" TextColor="Black" Grid.Column="0" />
+							<Label Text="{Binding KwotaZl}" FontSize="17" TextColor="Black" Grid.Column="1" />
+							<Label Text="{Binding Kategoria}" FontSize="17" TextColor="Black" Grid.Column="2" />
+							<!-- R itemtemplate to szablon w jaki sposob beda wyswietlane dane w kolekcji, bindujemy tekst do wlasciwosci Nazwa Wydatku, tak samo z kwota -->
+
+							<!-- R StringFormat 0:C (Currrency) => formatuje kwote wyswietlajac symbol waluty np zl dla lokalizacji polskiej, uzywa culture settings aplikacji/urzadzenia aby okreslic symbol -->
+
+						</Grid>
+                       
+								
+
+							
+
+					</DataTemplate>
                 </CollectionView.ItemTemplate>
             </CollectionView>
 

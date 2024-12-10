@@ -1,4 +1,5 @@
 ﻿using System.Collections.ObjectModel;
+using Microsoft.Maui.Controls;
 
 namespace ExpenseView
 {
@@ -21,6 +22,8 @@ namespace ExpenseView
             public required string Nazwa { get; set; }
             public required double Kwota { get; set; }
 
+            public required string Kategoria {  get; set; }
+
             public string KwotaZl => $"{Kwota:F2} zł";
             //R sformatowana kwota wydatku, 2 miejsca po przecinku i dopisane zł na koncu
         }
@@ -29,40 +32,46 @@ namespace ExpenseView
         //R obserrvablecollection sprawia ze jak zmieni sie kolekcja to zmieni sie tez w xamlu
         private void dodajWydatekBtn_Clicked(object sender, EventArgs e)
         {
-            
+
             var kwotaText = kwotaWydatkuEntry.Text;
-            var nazwa = nazwaWydatkuEntry.Text; 
+            var nazwa = nazwaWydatkuEntry.Text;
+            var kategoria = kategoriaPicker.SelectedItem?.ToString();
 
-            double kwota = 0.0; 
+            double kwota = 0.0;
 
-            
+
             if (double.TryParse(kwotaText, out kwota))
             {
-               
-                Wydatki.Add(new Wydatek { Nazwa = nazwa, Kwota = kwota });
-                budzet -= kwota;
-                budzetLabel.Text = budzet.ToString() + "zl";
-                if (budzet < 0)
+                if (!string.IsNullOrEmpty(kategoria))
                 {
-                    budzetLabel.TextColor = Color.FromRgb(255, 0, 0); 
+                    Wydatki.Add(new Wydatek { Nazwa = nazwa, Kwota = kwota, Kategoria = kategoria });
+                    budzet -= kwota;
+                    budzetLabel.Text = budzet.ToString() + "zl";
+                    if (budzet < 0)
+                    {
+                        budzetLabel.TextColor = Color.FromRgb(255, 0, 0);
+                    }
+                    else
+                    {
+                        budzetLabel.TextColor = Color.FromRgb(0, 255, 0);
+                    }
                 }
+
                 else
                 {
-                    budzetLabel.TextColor = Color.FromRgb(0, 255, 0); 
+                    DisplayAlert("Błąd", "Wybierz kategorię", "OK");
                 }
             }
             else
             {
-              
                 DisplayAlert("Błąd", "Wprowadź prawidłową kwotę", "OK");
             }
 
             nazwaWydatkuEntry.Text = string.Empty;
             kwotaWydatkuEntry.Text = string.Empty;
-
         }
 
-        
+
         private async void zmienBudzet_Clicked(object sender, EventArgs e)
         {
             string nowyBudzet = await DisplayPromptAsync(
@@ -71,7 +80,7 @@ namespace ExpenseView
                 "OK",
                 "COFNIJ",
                 "1.000.000.000zl",
-                initialValue: "1000zl",
+                initialValue: "1000",
                 keyboard: Keyboard.Numeric
 
 
@@ -94,6 +103,11 @@ namespace ExpenseView
 
 
         }
+        private async void pokazWykresyBtn_Clicked(object sender, EventArgs e)
+        {
+            await Navigation.PushAsync(new Wykresy());
+        }
+
     }
 
 }
